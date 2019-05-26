@@ -6,14 +6,14 @@ After=docker.service
 [Service]
 # It's important to chdir to the repo directory so the .env file can be read.
 # Remember to change the directory below to YOUR repo directory path
-WorkingDirectory=/opt/docker-repos/sabznbd
+WorkingDirectory=/opt/docker-repos/sabnzbd-dockerized
 
 Restart=always
 
 # Remove old containers, images and volumes
 # Enable this if you need to
-#ExecStartPre=/usr/bin/docker-compose -f /opt/docker-repos/sabznbd/docker-compose.yml down -v
-#ExecStartPre=/usr/bin/docker-compose -f /opt/docker-repos/sabznbd/docker-compose.yml rm -v
+#ExecStartPre=/usr/bin/docker-compose -f docker-compose.yml down -v
+#ExecStartPre=/usr/bin/docker-compose -f docker-compose.yml rm -v
 #ExecStartPre=-/bin/bash -c 'docker volume rm $(docker volume ls -q)'
 #ExecStartPre=-/bin/bash -c 'docker rmi $(docker images | grep "<none>" | awk \'{print $3}\')'
 #ExecStartPre=-/bin/bash -c 'docker rm -v $(docker ps -aq)'
@@ -26,4 +26,3 @@ ExecStop=/usr/bin/docker-compose -f docker-compose.yml down -v
 
 [Install]
 WantedBy=multi-user.target
-
