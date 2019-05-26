@@ -1,17 +1,19 @@
 ## SABnzbd as a docker service
 
-Repo that dockerizes the SABnzbd application.
+Repo that dockerizes the [SABnzbd](https://sabnzbd.org/) application.
 
 ### Commands
 
-docker-compose up -d
+    docker-compose up -d
 
 ### Override defaults
 
-1. Copy the `.env` template
-
+1. Copy the `.env` template  
+    
+    ```
     cp -r .env.example .env
-
+    ```
+    
 1. Change values on the `.env` file
 
 ### Systemd 
