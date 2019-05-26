@@ -37,3 +37,26 @@ Example usage would be:
     # Watch the logs
     sudo journalctl -b -f -u sabnzbd.service
 
+### OpenVPN conflict
+
+Networking issues usually arise when trying to run `docker-compose up` with OpenVPN running, because both will be fighting for the same network.
+
+In order to get past that, append the below lines to the `docker-compose.yml` or, alternatively, create a `docker-compose-override.conf` file:
+
+    networks:
+        default:
+            external:
+            name: localdev
+
+Now run this:
+
+    docker network create localdev --subnet 10.0.1.0/24
+    
+If you want the network to be created every time the systemd service runs/shuts down, add the following items on the `[Service]` section:
+
+    # Create temp network before running docker-compose
+    ExecStartPre=/usr/bin/docker network create localdev --subnet 10.0.1.0/24
+    
+    # Delete temp network after running docker-compose
+    ExecStopPost=/usr/bin/docker network rm localdev
+
