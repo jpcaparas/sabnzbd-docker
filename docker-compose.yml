@@ -1,0 +1,20 @@
+---
+version: "3"
+services:
+  sabnzbd:
+    image: linuxserver/sabnzbd
+    container_name: sabnzbd
+    environment:
+      - "PUID=${PUID:-1000}"
+      - "PGID=${PGID:-1000}"
+      - "TZ=${TZ:-Pacific/Auckland}"
+    volumes:
+      - ./volumes/sabnzbd/config:/config
+      # On first time setup, you'll actually have to manually change the default directories to /downloads & /incomplete-downloads.
+      # If you don't set these paths, you'll lose your downloads the next time your container restarts
+      - ./volumes/sabnzbd/downloads:/downloads
+      - ./volumes/sabnzbd/incomplete-downloads:/incomplete-downloads
+    ports:
+      - "${HOST_PORT:-8080}:8080"
+      - "${HOST_PORT_SSL:-9090}:9090"
+    restart: unless-stopped
